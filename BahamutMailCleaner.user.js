@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         巴哈姆特刪信助手
-// @namespace    https://github.com/vios10009
+// @namespace    https://github.com/vios10009/BahamutMailCleaner
 // @version      1.1
 // @description  一鍵刪除指定的通知信(預設刪除動畫瘋獲獎通知、【勇者福利社】成功獲得抽獎資格通知信)
 // @author       vios10009
