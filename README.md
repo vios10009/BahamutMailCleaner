@@ -10,5 +10,10 @@ https://mailbox.gamer.com.tw/
 ![image](https://github.com/user-attachments/assets/da7f351a-60b6-4d1b-8491-cc5933a2b86b)
 
 # 新增刪除選項
+如果是使用油猴等腳本，可以在擴充套件按鈕上點擊新增要刪除的標題<br/>
+![image](https://github.com/user-attachments/assets/310f8846-533c-41af-ad10-e1bb554b629d)
+
+或
+
 在腳本內編輯titlesToDelete項目，即可自由擴充要刪除的信件標題<br/>
 ![image](https://github.com/user-attachments/assets/c466eeca-c303-4d4c-9ff1-04328fb32407)
