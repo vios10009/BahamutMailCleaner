@@ -7,8 +7,8 @@
 // @match        https://mailbox.gamer.com.tw/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gamer.com.tw
 // @grant        none
-// @downloadURL
-// @updateURL
+// @downloadURL https://github.com/vios10009/BahamutMailCleaner/raw/refs/heads/main/BahamutMailCleaner.user.js
+// @updateURL https://github.com/vios10009/BahamutMailCleaner/raw/refs/heads/main/BahamutMailCleaner.user.js
 // ==/UserScript==
 
 let bhSlave = document.getElementById("BH-slave");
@@ -77,7 +77,11 @@ function deleteLetters(titles) {
             }, 500);
         }
     } else {
-        // 若當前頁面無可刪除的信件，嘗試翻頁
-        alert(`刪除完成！總共刪除了 ${deleteCount} 封指定通知信。`);
+        // 若當前頁面無可刪除的信件則結束並告知總共刪除的數量
+        if (deleteCount == 0) {
+            alert(`目前頁面沒有可刪除的信件。`);
+        } else {
+            alert(`刪除完成！總共刪除了 ${deleteCount} 封指定通知信。`);
+        }        
     }
 }
