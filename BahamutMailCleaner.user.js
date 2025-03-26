@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         巴哈姆特刪信助手
 // @namespace    https://github.com/vios10009
-// @version      1.0
+// @version      1.1
 // @description  一鍵刪除指定的通知信(預設刪除動畫瘋獲獎通知、【勇者福利社】成功獲得抽獎資格通知信)
 // @author       vios10009
 // @match        https://mailbox.gamer.com.tw/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=gamer.com.tw
-// @grant        none
+// @grant         GM_getValue
+// @grant         GM_setValue
+// @grant         GM_registerMenuCommand
 // @downloadURL https://github.com/vios10009/BahamutMailCleaner/raw/refs/heads/main/BahamutMailCleaner.user.js
 // @updateURL https://github.com/vios10009/BahamutMailCleaner/raw/refs/heads/main/BahamutMailCleaner.user.js
 // ==/UserScript==
@@ -15,10 +17,12 @@ let bhSlave = document.getElementById("BH-slave");
 let newButton = document.createElement("button");
 
 // 自訂要刪除的信件標題列表
-const titlesToDelete = [
+const defaultTitles = [
     "動畫瘋獲獎通知",
     "【勇者福利社】成功獲得抽獎資格通知信"
 ];
+// 從 GM_getValue 取得已儲存的標題，如果沒有則使用預設標題
+let titlesToDelete = GM_getValue('titlesToDelete', defaultTitles);
 
 newButton.innerText = "刪除本頁的指定通知信";
 newButton.style.cssText = `
@@ -82,6 +86,40 @@ function deleteLetters(titles) {
             alert(`目前頁面沒有可刪除的信件。`);
         } else {
             alert(`刪除完成！總共刪除了 ${deleteCount} 封指定通知信。`);
-        }        
+        }
     }
 }
+
+// 新增要刪除的標題
+GM_registerMenuCommand("新增要刪除的信件標題", () => {
+    let newTitle = prompt("輸入要刪除的信件標題:");
+    if (newTitle && !titlesToDelete.includes(newTitle)) {
+        titlesToDelete.push(newTitle);
+        GM_setValue('titlesToDelete', titlesToDelete);
+        alert("已新增標題：" + newTitle);
+    } else {
+        alert("標題無效或重複！");
+    }
+});
+
+// 刪除要刪除的標題
+GM_registerMenuCommand("刪除要刪除的信件標題", () => {
+    let titleToDelete = prompt("輸入要刪除的信件標題:");
+    let index = titlesToDelete.indexOf(titleToDelete);
+    if (index > -1) {
+        titlesToDelete.splice(index, 1);
+        GM_setValue('titlesToDelete', titlesToDelete);
+        alert("已刪除標題：" + titleToDelete);
+    } else {
+        alert("找不到該標題！");
+    }
+});
+
+// 顯示目前設定的標題
+GM_registerMenuCommand("顯示目前設定的標題", () => {
+    if (titlesToDelete.length > 0) {
+        alert("目前設定的標題：\n" + titlesToDelete.join("\n"));
+    } else {
+        alert("目前沒有設定任何標題。");
+    }
+});
