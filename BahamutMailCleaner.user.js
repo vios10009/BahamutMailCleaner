@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         巴哈姆特刪信助手
-// @namespace    https://github.com/vios10009/BahamutMailCleaner
-// @version      1.1
+// @namespace    https://github.com/vios10009
+// @version      1.2
 // @description  一鍵刪除指定的通知信(預設刪除動畫瘋獲獎通知、【勇者福利社】成功獲得抽獎資格通知信)
 // @author       vios10009
 // @match        https://mailbox.gamer.com.tw/*
@@ -118,7 +118,28 @@ GM_registerMenuCommand("刪除要刪除的信件標題", () => {
 // 顯示目前設定的標題
 GM_registerMenuCommand("顯示目前設定的標題", () => {
     if (titlesToDelete.length > 0) {
-        alert("目前設定的標題：\n" + titlesToDelete.join("\n"));
+        let titleList = titlesToDelete.join("\n");
+
+        // 建立彈出視窗的 textarea
+        let textarea = document.createElement("textarea");
+        textarea.value = titleList;
+        textarea.style.width = "400px";
+        textarea.style.height = "200px";
+        textarea.style.position = "fixed";
+        textarea.style.top = "50%";
+        textarea.style.left = "50%";
+        textarea.style.transform = "translate(-50%, -50%)";
+        textarea.style.zIndex = "9999";
+        textarea.style.padding = "10px";
+        textarea.style.border = "1px solid #ccc";
+        textarea.style.background = "white";
+        textarea.style.fontSize = "14px";
+
+        document.body.appendChild(textarea);
+        textarea.select(); // 自動選取內容，方便複製
+
+        // 當點擊其他地方時，自動關閉 textarea
+        textarea.onblur = () => document.body.removeChild(textarea);
     } else {
         alert("目前沒有設定任何標題。");
     }
